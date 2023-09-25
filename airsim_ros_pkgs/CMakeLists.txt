@@ -22,3 +22,11 @@ catkin_package(
 include_directories(
   ${catkin_INCLUDE_DIRS}
 )
+
+add_executable(airsim_node src/airsim_node.cpp)
+target_link_libraries(airsim_node
+  ${catkin_LIBRARIES})
+
+install(TARGETS
+  airsim_node
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
