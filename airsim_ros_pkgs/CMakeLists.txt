@@ -30,3 +30,8 @@ target_link_libraries(airsim_node
 install(TARGETS
   airsim_node
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+
+install(DIRECTORY
+  launch
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+)

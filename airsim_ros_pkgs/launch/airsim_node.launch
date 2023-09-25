@@ -1,0 +1,4 @@
+<launch>
+	<node name="airsim_node" pkg="airsim_ros_pkgs" type="airsim_node" output="screen">
+	</node>
+</launch>
