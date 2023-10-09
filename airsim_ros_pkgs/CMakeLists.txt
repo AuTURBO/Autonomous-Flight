@@ -6,10 +6,22 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O3 -Wall -g")
 
 add_compile_options(-std=c++14)
 
+set(MSG_DEPENDENCIES std_msgs geometry_msgs geographic_msgs)
+
+file(GLOB MESSAGE_FILES RELATIVE ${CMAKE_CURRENT_LIST_DIR}/msg "*.msg")
+file(GLOB SERVICE_FILES RELATIVE ${CMAKE_CURRENT_LIST_DIR}/srv "*.srv")
+
 find_package(catkin REQUIRED COMPONENTS
+  ${MSG_DEPENDENCIES}
+  message_generation
   roscpp
   rospy
 )
+
+# Custom messages and services.
+add_message_files(FILES ${MESSAGE_FILES})
+add_service_files(FILES ${SERVICE_FILES})
+generate_messages(DEPENDENCIES ${MSG_DEPENDENCIES})
 
 catkin_package(
 
