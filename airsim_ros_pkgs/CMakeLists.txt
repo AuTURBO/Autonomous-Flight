@@ -8,10 +8,10 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O3 -Wall -g")
 add_compile_options(-std=c++17) # C++17 standard for third party libraries.
 set(AIRSIM_ROOT ${PROJECT_SOURCE_DIR}/../third_party) # Couldn't change the name because it is used in other files.
 add_subdirectory("${AIRSIM_ROOT}/cmake/AirLib" AirsimLib)
-include_directories(${AIRSIM_ROOT}/AirLib/include ${AIRSIM_ROOT}/AirLib/deps/eigen3)
 add_subdirectory("${AIRSIM_ROOT}/cmake/MavLinkCom" MavLinkCom)
-include_directories(${AIRSIM_ROOT}/MavLinkCom/include ${AIRSIM_ROOT}/MavLinkCom/common_utils)
 add_subdirectory("${AIRSIM_ROOT}/cmake/rpclib_wrapper" RpcLibWrapper)
+
+find_package(Eigen3 REQUIRED)
 
 set(MSG_DEPENDENCIES std_msgs geometry_msgs geographic_msgs)
 file(GLOB MESSAGE_FILES RELATIVE ${CMAKE_CURRENT_LIST_DIR}/msg "*.msg")
@@ -37,13 +37,26 @@ catkin_package(
   # DEPENDS system_lib
 )
 
+message(STATUS "Eigen3 include dir: ${AIRSIM_ROOT}/AirLib/deps/eigen3")
+
 include_directories(
   ${catkin_INCLUDE_DIRS}
-)
+  ${EIGEN3_INCLUDE_DIRS}
+  ${AIRSIM_ROOT}/AirLib/include
+  ${AIRSIM_ROOT}/MavLinkCom/include
+  ${AIRSIM_ROOT}/MavLinkCom/common_utils
+  include)
+
+add_library(airsim_settings_parser src/airsim_settings_parser.cpp)
+target_link_libraries(airsim_settings_parser
+  ${catkin_LIBRARIES}
+  ${EIGEN3_LIBRARIES}
+  AirLib)
 
 add_executable(airsim_node src/airsim_node.cpp)
 target_link_libraries(airsim_node
-  ${catkin_LIBRARIES})
+  ${catkin_LIBRARIES}
+  airsim_settings_parser)
 
 install(TARGETS
   airsim_node
