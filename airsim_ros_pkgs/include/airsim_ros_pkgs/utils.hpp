@@ -14,6 +14,8 @@ struct SimpleMatrix {
       : rows(rows), cols(cols), data(data) {}
 };
 
+airsim_ros_pkgs::GPSYaw get_gps_msg_from_airsim_geo_point(
+    const msr::airlib::GeoPoint &geo_point);
 }  // namespace utils
 }  // namespace airsim_ros
 

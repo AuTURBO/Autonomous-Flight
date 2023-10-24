@@ -13,18 +13,21 @@ add_subdirectory("${AIRSIM_ROOT}/cmake/rpclib_wrapper" RpcLibWrapper)
 
 find_package(Eigen3 REQUIRED)
 
-set(MSG_DEPENDENCIES std_msgs geometry_msgs geographic_msgs)
-file(GLOB MESSAGE_FILES RELATIVE ${CMAKE_CURRENT_LIST_DIR}/msg "msg/*.msg")
-file(GLOB SERVICE_FILES RELATIVE ${CMAKE_CURRENT_LIST_DIR}/srv "srv/*.srv")
-
+set(MSG_DEPENDENCIES
+  geometry_msgs
+  geographic_msgs
+  nav_msgs
+  sensor_msgs
+  std_msgs)
 find_package(catkin REQUIRED COMPONENTS
   ${MSG_DEPENDENCIES}
   message_generation
   roscpp
-  rospy
-)
+  rospy)
 
 # Custom messages and services.
+file(GLOB MESSAGE_FILES RELATIVE ${CMAKE_CURRENT_LIST_DIR}/msg "msg/*.msg")
+file(GLOB SERVICE_FILES RELATIVE ${CMAKE_CURRENT_LIST_DIR}/srv "srv/*.srv")
 add_message_files(FILES ${MESSAGE_FILES})
 add_service_files(FILES ${SERVICE_FILES})
 generate_messages(DEPENDENCIES ${MSG_DEPENDENCIES})

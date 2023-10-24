@@ -3,36 +3,61 @@
 
 #include <string>
 
+#include "rpc/rpc_error.h"
+
+// Airsim library headers
+#include "common/AirSimSettings.hpp"
+#include "vehicles/car/api/CarRpcLibClient.hpp"
+#include "vehicles/multirotor/api/MultirotorRpcLibClient.hpp"
+
+// ROS headers
 #include "ros/ros.h"
 
-// ROS custom msgs.
-#include "airsim_ros_pkgs/Altimeter.h"
-#include "airsim_ros_pkgs/CarControls.h"
-#include "airsim_ros_pkgs/CarState.h"
-#include "airsim_ros_pkgs/Environment.h"
-#include "airsim_ros_pkgs/GPSYaw.h"
-#include "airsim_ros_pkgs/GimbalAngleEulerCmd.h"
-#include "airsim_ros_pkgs/GimbalAngleQuatCmd.h"
-#include "airsim_ros_pkgs/VelCmd.h"
-#include "airsim_ros_pkgs/VelCmdGroup.h"
-
-// ROS custom srvs.
-#include "airsim_ros_pkgs/Land.h"
-#include "airsim_ros_pkgs/LandGroup.h"
-#include "airsim_ros_pkgs/Reset.h"
-#include "airsim_ros_pkgs/Takeoff.h"
-#include "airsim_ros_pkgs/TakeoffGroup.h"
+#include "airsim_ros_pkgs/messages.hpp"
+#include "airsim_ros_pkgs/robot_ros.hpp"
 
 namespace airsim_ros {
 namespace airsim_ros_wrapper {
 
+struct Config {
+  std::string host_ip;
+  ros::NodeHandle nh;
+  ros::NodeHandle nh_private;
+};
+
 class AirsimRosWrapper {
  public:
+  AirsimRosWrapper() = delete;
+  AirsimRosWrapper(const AirsimRosWrapper &) = delete;
+  AirsimRosWrapper &operator=(const AirsimRosWrapper &) = delete;
+  AirsimRosWrapper(AirsimRosWrapper &&) = delete;
+  AirsimRosWrapper &operator=(AirsimRosWrapper &&) = delete;
+
   AirsimRosWrapper(const ros::NodeHandle &nh, const ros::NodeHandle &nh_private,
                    const std::string &host_ip);
-  ~AirsimRosWrapper(){};
 
  private:
+  enum class AirsimMode { kDrone, kCar };
+
+  void InitializeAirsim();
+  void InitializeRos();
+
+  Config config_;
+
+  // A flag to indicate whether the node is running in drone mode or car mode.
+  AirsimMode airsim_mode_;
+
+  // RPC clients to communicate with AirSim server.
+  std::unique_ptr<msr::airlib::RpcLibClientBase> airsim_client_robot_;
+  msr::airlib::RpcLibClientBase airsim_client_images_;
+  msr::airlib::RpcLibClientBase airsim_client_lidar_;
+
+  std::unordered_map<std::string, std::unique_ptr<robot_ros::VehicleROS>>
+      vehicle_name_ptr_map_;
+
+  ros::Publisher origin_geo_point_pub_;           // home geo coord of drones
+  msr::airlib::GeoPoint origin_geo_point_;        // gps coord of unreal origin
+  airsim_ros_pkgs::GPSYaw origin_geo_point_msg_;  // todo duplicate
 };
 
 }  // namespace airsim_ros_wrapper

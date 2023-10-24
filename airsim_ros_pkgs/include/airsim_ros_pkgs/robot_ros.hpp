@@ -4,9 +4,16 @@
 #include <string>
 #include <vector>
 
+// Airsim library headers
 #include "common/AirSimSettings.hpp"
-#include "messages.hpp"
+
+// ROS headers
+#include "geometry_msgs/TransformStamped.h"
+#include "nav_msgs/Odometry.h"
 #include "ros/ros.h"
+#include "sensor_msgs/NavSatFix.h"
+
+#include "messages.hpp"
 
 namespace airsim_ros {
 namespace robot_ros {
@@ -67,7 +74,7 @@ class MultiRotorROS : public VehicleROS {
   ros::ServiceServer land_srvr;
 
   bool has_vel_cmd;
-  VelCmd vel_cmd;
+  messages::VelCmd vel_cmd;
 };
 
 }  // namespace robot_ros
