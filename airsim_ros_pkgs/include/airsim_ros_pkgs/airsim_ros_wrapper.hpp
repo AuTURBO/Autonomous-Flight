@@ -1,6 +1,8 @@
 #ifndef AIRSIM_ROS_PKGS_INCLUDE_AIRSIM_ROS_PKGS_AIRSIM_ROS_WRAPPER_HPP_
 #define AIRSIM_ROS_PKGS_INCLUDE_AIRSIM_ROS_PKGS_AIRSIM_ROS_WRAPPER_HPP_
 
+#include <string>
+
 #include "ros/ros.h"
 
 // ROS custom msgs.
@@ -20,5 +22,20 @@
 #include "airsim_ros_pkgs/Reset.h"
 #include "airsim_ros_pkgs/Takeoff.h"
 #include "airsim_ros_pkgs/TakeoffGroup.h"
+
+namespace airsim_ros {
+namespace utils {
+
+class AirsimRosWrapper {
+ public:
+  AirsimRosWrapper(const ros::NodeHandle &nh, const ros::NodeHandle &nh_private,
+                   const std::string &host_ip);
+  ~AirsimRosWrapper(){};
+
+ private:
+}
+
+}  // namespace utils
+}  // namespace airsim_ros
 
 #endif  // AIRSIM_ROS_PKGS_INCLUDE_AIRSIM_ROS_PKGS_AIRSIM_ROS_WRAPPER_HPP_
