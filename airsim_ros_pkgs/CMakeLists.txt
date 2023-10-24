@@ -14,8 +14,8 @@ add_subdirectory("${AIRSIM_ROOT}/cmake/rpclib_wrapper" RpcLibWrapper)
 find_package(Eigen3 REQUIRED)
 
 set(MSG_DEPENDENCIES std_msgs geometry_msgs geographic_msgs)
-file(GLOB MESSAGE_FILES RELATIVE ${CMAKE_CURRENT_LIST_DIR}/msg "*.msg")
-file(GLOB SERVICE_FILES RELATIVE ${CMAKE_CURRENT_LIST_DIR}/srv "*.srv")
+file(GLOB MESSAGE_FILES RELATIVE ${CMAKE_CURRENT_LIST_DIR}/msg "msg/*.msg")
+file(GLOB SERVICE_FILES RELATIVE ${CMAKE_CURRENT_LIST_DIR}/srv "srv/*.srv")
 
 find_package(catkin REQUIRED COMPONENTS
   ${MSG_DEPENDENCIES}
@@ -30,11 +30,8 @@ add_service_files(FILES ${SERVICE_FILES})
 generate_messages(DEPENDENCIES ${MSG_DEPENDENCIES})
 
 catkin_package(
-
-  # INCLUDE_DIRS include
-  # LIBRARIES airsim_ros_pkgs
-  # CATKIN_DEPENDS roscpp rospy
-  # DEPENDS system_lib
+  INCLUDE_DIRS include
+  CATKIN_DEPENDS message_runtime roscpp std_msgs # nodelet
 )
 
 message(STATUS "Eigen3 include dir: ${AIRSIM_ROOT}/AirLib/deps/eigen3")
@@ -53,10 +50,20 @@ target_link_libraries(airsim_settings_parser
   ${EIGEN3_LIBRARIES}
   AirLib)
 
+add_library(airsim_ros src/airsim_ros_wrapper.cpp)
+add_dependencies(airsim_ros
+  ${${PROJECT_NAME}_EXPORTED_TARGETS}
+  ${catkin_EXPORTED_TARGETS})
+target_link_libraries(airsim_ros
+  ${catkin_LIBRARIES}
+  AirLib
+  airsim_settings_parser)
+
 add_executable(airsim_node src/airsim_node.cpp)
 target_link_libraries(airsim_node
   ${catkin_LIBRARIES}
-  airsim_settings_parser)
+  airsim_settings_parser
+  airsim_ros)
 
 install(TARGETS
   airsim_node

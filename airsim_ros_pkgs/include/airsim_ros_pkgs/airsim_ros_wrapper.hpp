@@ -24,7 +24,7 @@
 #include "airsim_ros_pkgs/TakeoffGroup.h"
 
 namespace airsim_ros {
-namespace utils {
+namespace airsim_ros_wrapper {
 
 class AirsimRosWrapper {
  public:
@@ -33,9 +33,9 @@ class AirsimRosWrapper {
   ~AirsimRosWrapper(){};
 
  private:
-}
+};
 
-}  // namespace utils
+}  // namespace airsim_ros_wrapper
 }  // namespace airsim_ros
 
 #endif  // AIRSIM_ROS_PKGS_INCLUDE_AIRSIM_ROS_PKGS_AIRSIM_ROS_WRAPPER_HPP_
