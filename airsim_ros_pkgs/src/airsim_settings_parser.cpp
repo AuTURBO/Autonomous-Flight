@@ -25,17 +25,14 @@ bool AirSimSettingsParser::initializeSettings() {
   std::cout << "simmode_name: " << settings_json.getString("SimMode", "")
             << "\n";
 
-  AirSimSettings::singleton().load(
-      std::bind(&AirSimSettingsParser::getSimMode, this));
+  AirSimSettings::singleton().load([this]() -> std::string {
+    return Settings::loadJSonString(settingsText_).getString("SimMode", "");
+  });
 
   return true;
 }
 
 bool AirSimSettingsParser::success() const { return success_; }
-
-std::string AirSimSettingsParser::getSimMode() const {
-  return Settings::loadJSonString(settingsText_).getString("SimMode", "");
-}
 
 bool AirSimSettingsParser::readSettingsTextFromFile(
     const std::string& settingsFilepath, std::string& settingsText) {
