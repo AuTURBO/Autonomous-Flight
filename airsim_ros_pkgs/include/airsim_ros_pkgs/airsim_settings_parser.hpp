@@ -2,6 +2,7 @@
 #define AIRSIM_ROS_PKGS_INCLUDE_AIRSIM_ROS_PKGS_AIRSIM_SETTINGS_PARSER_HPP_
 
 #include <iostream>
+#include <string>
 
 // Airsim library headers
 #include "common/AirSimSettings.hpp"
