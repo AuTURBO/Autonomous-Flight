@@ -19,6 +19,8 @@ STRICT_MODE_ON
 namespace airsim_ros {
 namespace airsim_settings_parser {
 
+// a minimal airsim settings parser, adapted from
+// Unreal/Plugins/AirSim/SimHUD/SimHUD.h
 class AirSimSettingsParser {
  public:
   using AirSimSettings = msr::airlib::AirSimSettings;
