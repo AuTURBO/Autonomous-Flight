@@ -1,6 +1,7 @@
 #include "airsim_ros_pkgs/airsim_settings_parser.hpp"
 
 #include <iostream>
+#include <string>
 
 namespace airsim_ros {
 namespace airsim_settings_parser {

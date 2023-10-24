@@ -1,6 +1,8 @@
 #include "airsim_ros_pkgs/airsim_ros_wrapper.hpp"
 
+#include <memory>
 #include <string>
+#include <unordered_map>
 
 #include "common/AirSimSettings.hpp"
 #include "vehicles/car/api/CarRpcLibClient.hpp"

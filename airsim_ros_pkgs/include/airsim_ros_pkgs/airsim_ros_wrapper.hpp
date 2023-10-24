@@ -1,7 +1,9 @@
 #ifndef AIRSIM_ROS_PKGS_INCLUDE_AIRSIM_ROS_PKGS_AIRSIM_ROS_WRAPPER_HPP_
 #define AIRSIM_ROS_PKGS_INCLUDE_AIRSIM_ROS_PKGS_AIRSIM_ROS_WRAPPER_HPP_
 
+#include <memory>
 #include <string>
+#include <unordered_map>
 
 #include "rpc/rpc_error.h"
 

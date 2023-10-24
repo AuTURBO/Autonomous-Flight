@@ -1,5 +1,5 @@
-#ifndef AIRSIM_ROS_PKGS_INCLUDE_AIRSIM_ROS_PKGS_ROBOT_HPP_
-#define AIRSIM_ROS_PKGS_INCLUDE_AIRSIM_ROS_PKGS_ROBOT_HPP_
+#ifndef AIRSIM_ROS_PKGS_INCLUDE_AIRSIM_ROS_PKGS_ROBOT_ROS_HPP_
+#define AIRSIM_ROS_PKGS_INCLUDE_AIRSIM_ROS_PKGS_ROBOT_ROS_HPP_
 
 #include <string>
 #include <vector>
@@ -13,7 +13,7 @@
 #include "ros/ros.h"
 #include "sensor_msgs/NavSatFix.h"
 
-#include "messages.hpp"
+#include "airsim_ros_pkgs/messages.hpp"
 
 namespace airsim_ros {
 namespace robot_ros {
@@ -80,4 +80,4 @@ class MultiRotorROS : public VehicleROS {
 }  // namespace robot_ros
 }  // namespace airsim_ros
 
-#endif  // AIRSIM_ROS_PKGS_INCLUDE_AIRSIM_ROS_PKGS_ROBOT_HPP_
+#endif  // AIRSIM_ROS_PKGS_INCLUDE_AIRSIM_ROS_PKGS_ROBOT_ROS_HPP_
