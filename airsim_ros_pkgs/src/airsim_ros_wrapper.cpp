@@ -55,12 +55,13 @@ void AirsimRosWrapper::InitializeAirsim() {
           true, vehicle_name_ptr_pair.first);  // todo exposes as rosservice?
     }
 
-    origin_geo_point_ = airsim_client_robot_->getHomeGeoPoint("");
+    // Get home point from airsim.
+    const auto origin_geo_point = airsim_client_robot_->getHomeGeoPoint("");
     // todo there's only one global origin geopoint for environment. but airsim
     // API accept a parameter vehicle_name? inside carsimpawnapi.cpp, there's a
     // geopoint being assigned in the constructor. by?
     origin_geo_point_msg_ =
-        messages::get_gps_msg_from_airsim_geo_point(origin_geo_point_);
+        messages::get_gps_msg_from_airsim_geo_point(origin_geo_point);
   } catch (rpc::rpc_error &e) {
     std::string msg = e.get_error().as<std::string>();
     ROS_ERROR_STREAM("Exception raised by the API, something went wrong."

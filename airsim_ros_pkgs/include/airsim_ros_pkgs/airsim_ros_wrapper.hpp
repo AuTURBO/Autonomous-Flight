@@ -58,7 +58,6 @@ class AirsimRosWrapper {
       vehicle_name_ptr_map_;
 
   ros::Publisher origin_geo_point_pub_;           // home geo coord of drones
-  msr::airlib::GeoPoint origin_geo_point_;        // gps coord of unreal origin
   airsim_ros_pkgs::GPSYaw origin_geo_point_msg_;  // todo duplicate
 };
 
