@@ -3,8 +3,7 @@
 
 #include <string>
 
-#include "common/AirSimSettings.hpp"
-#include "common/CommonStructs.hpp"
+#include "mavros_msgs/AttitudeTarget.h"
 
 // ROS custom msgs.
 #include "airsim_ros_pkgs/Altimeter.h"
@@ -24,6 +23,10 @@
 #include "airsim_ros_pkgs/Takeoff.h"
 #include "airsim_ros_pkgs/TakeoffGroup.h"
 
+#include "common/AirSimSettings.hpp"
+#include "common/CommonStructs.hpp"
+#include "vehicles/multirotor/api/MultirotorCommon.hpp"
+
 namespace airsim_ros {
 namespace messages {
 
@@ -42,14 +45,12 @@ struct GimbalCmd {
   msr::airlib::Quaternionr target_quat;
 };
 
-airsim_ros_pkgs::GPSYaw get_gps_msg_from_airsim_geo_point(
-    const msr::airlib::GeoPoint& geo_point) {
-  airsim_ros_pkgs::GPSYaw gps_msg;
-  gps_msg.latitude = geo_point.latitude;
-  gps_msg.longitude = geo_point.longitude;
-  gps_msg.altitude = geo_point.altitude;
-  return gps_msg;
-}
+struct RpyThrustCmd {
+  double body_rate_x;
+  double body_rate_y;
+  double body_rate_z;
+  double thrust;
+};
 
 }  // namespace messages
 }  // namespace airsim_ros

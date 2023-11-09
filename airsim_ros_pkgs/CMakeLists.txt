@@ -17,13 +17,17 @@ set(MSG_DEPENDENCIES
   geometry_msgs
   geographic_msgs
   nav_msgs
+  mavros_msgs
   sensor_msgs
   std_msgs)
-find_package(catkin REQUIRED COMPONENTS
-  ${MSG_DEPENDENCIES}
+set(COMPONENT_DEPENDENCIES
   message_generation
   roscpp
-  rospy)
+  rospy
+  tf2_ros)
+find_package(catkin REQUIRED COMPONENTS
+  ${MSG_DEPENDENCIES}
+  ${COMPONENT_DEPENDENCIES})
 
 # Custom messages and services.
 file(GLOB MESSAGE_FILES RELATIVE ${CMAKE_CURRENT_LIST_DIR}/msg "msg/*.msg")
@@ -34,8 +38,7 @@ generate_messages(DEPENDENCIES ${MSG_DEPENDENCIES})
 
 catkin_package(
   INCLUDE_DIRS include
-  CATKIN_DEPENDS message_runtime roscpp std_msgs # nodelet
-)
+  CATKIN_DEPENDS message_runtime ${MSG_DEPENDENCIES} ${COMPONENT_DEPENDENCIES})
 
 message(STATUS "Eigen3 include dir: ${AIRSIM_ROOT}/AirLib/deps/eigen3")
 
@@ -53,7 +56,10 @@ target_link_libraries(airsim_settings_parser
   ${EIGEN3_LIBRARIES}
   AirLib)
 
-add_library(airsim_ros src/airsim_ros_wrapper.cpp)
+set(ARISIM_SOURCES
+  src/airsim_ros_wrapper.cpp
+  src/command_subscriber.cpp)
+add_library(airsim_ros ${ARISIM_SOURCES})
 add_dependencies(airsim_ros
   ${${PROJECT_NAME}_EXPORTED_TARGETS}
   ${catkin_EXPORTED_TARGETS})

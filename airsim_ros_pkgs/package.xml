@@ -12,6 +12,12 @@
 
   <depend>roscpp</depend>
   <depend>rospy</depend>
+  <depend>tf2_ros</depend>
+  <depend>geometry_msgs</depend>
+  <depend>geographic_msgs</depend>
+  <depend>nav_msgs</depend>
+  <depend>mavros_msgs</depend>
+  <depend>sensor_msgs</depend>
   <depend>std_msgs</depend>
 
   <depend>message_generation</depend>
