@@ -78,7 +78,8 @@ class AirsimClient {
 
   airsim_ros_pkgs::GPSYaw GetHomeGeoPoint() const {
     const auto origin_geo_point = airsim_client_robot_->getHomeGeoPoint("");
-    return utils::GetGpsMsgFromAirsimGeoPoint(origin_geo_point);
+    return messages::helper_functions::GetGpsMsgFromAirsimGeoPoint(
+        origin_geo_point);
   }
 
  private:

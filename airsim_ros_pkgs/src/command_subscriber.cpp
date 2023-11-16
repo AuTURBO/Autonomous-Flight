@@ -31,7 +31,8 @@ void CommandSubscriber::GimbalAngleQuatCommandCallback(
   try {
     tf2::convert(gimbal_angle_quat_cmd_msg->orientation, quaternion_command);
     quaternion_command.normalize();
-    gimbal_cmd_.target_quat = utils::GetAirlibQuatFromRos(quaternion_command);
+    gimbal_cmd_.target_quat =
+        messages::helper_functions::GetAirlibQuatFromRos(quaternion_command);
     gimbal_cmd_.camera_name = gimbal_angle_quat_cmd_msg->camera_name;
     gimbal_cmd_.vehicle_name = gimbal_angle_quat_cmd_msg->vehicle_name;
     has_gimbal_cmd_ = true;
@@ -48,7 +49,8 @@ void CommandSubscriber::GimbalAngleEulerCommandCallback(
                               utils::deg2rad(gimbal_angle_euler_cmd_msg->pitch),
                               utils::deg2rad(gimbal_angle_euler_cmd_msg->yaw));
     quaternion_command.normalize();
-    gimbal_cmd_.target_quat = utils::GetAirlibQuatFromRos(quaternion_command);
+    gimbal_cmd_.target_quat =
+        messages::helper_functions::GetAirlibQuatFromRos(quaternion_command);
     gimbal_cmd_.camera_name = gimbal_angle_euler_cmd_msg->camera_name;
     gimbal_cmd_.vehicle_name = gimbal_angle_euler_cmd_msg->vehicle_name;
     has_gimbal_cmd_ = true;

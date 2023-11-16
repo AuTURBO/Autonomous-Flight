@@ -58,7 +58,8 @@ target_link_libraries(airsim_settings_parser
 
 set(ARISIM_SOURCES
   src/airsim_ros_wrapper.cpp
-  src/command_subscriber.cpp)
+  src/command_subscriber.cpp
+  src/messages.cpp)
 add_library(airsim_ros ${ARISIM_SOURCES})
 add_dependencies(airsim_ros
   ${${PROJECT_NAME}_EXPORTED_TARGETS}
