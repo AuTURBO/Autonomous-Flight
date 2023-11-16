@@ -4,6 +4,7 @@
 #include <string>
 
 #include "mavros_msgs/AttitudeTarget.h"
+#include "tf2/LinearMath/Quaternion.h"
 
 // ROS custom msgs.
 #include "airsim_ros_pkgs/Altimeter.h"
@@ -29,6 +30,16 @@
 
 namespace airsim_ros {
 namespace messages {
+
+namespace helper_functions {
+
+airsim_ros_pkgs::GPSYaw GetGpsMsgFromAirsimGeoPoint(
+    const msr::airlib::GeoPoint& geo_point);
+
+msr::airlib::Quaternionr GetAirlibQuatFromRos(
+    const tf2::Quaternion& tf2_quat);
+
+}  // namespace helper_functions
 
 struct VelCmd {
   double x;

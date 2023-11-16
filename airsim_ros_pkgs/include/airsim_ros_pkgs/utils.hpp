@@ -1,12 +1,6 @@
 #ifndef AIRSIM_ROS_PKGS_INCLUDE_AIRSIM_ROS_PKGS_UTILS_HPP_
 #define AIRSIM_ROS_PKGS_INCLUDE_AIRSIM_ROS_PKGS_UTILS_HPP_
 
-#include "tf2/LinearMath/Quaternion.h"
-
-#include "common/CommonStructs.hpp"
-
-#include "airsim_ros_pkgs/messages.hpp"
-
 namespace airsim_ros {
 namespace utils {
 
@@ -56,21 +50,6 @@ inline T angular_dist(T from, T to) {
   else if (d < -M_PI)
     d += 2. * M_PI;
   return d;
-}
-
-inline airsim_ros_pkgs::GPSYaw GetGpsMsgFromAirsimGeoPoint(
-    const msr::airlib::GeoPoint& geo_point) {
-  airsim_ros_pkgs::GPSYaw gps_msg;
-  gps_msg.latitude = geo_point.latitude;
-  gps_msg.longitude = geo_point.longitude;
-  gps_msg.altitude = geo_point.altitude;
-  return gps_msg;
-}
-
-inline msr::airlib::Quaternionr GetAirlibQuatFromRos(
-    const tf2::Quaternion& tf2_quat) {
-  return msr::airlib::Quaternionr(tf2_quat.w(), tf2_quat.x(), tf2_quat.y(),
-                                  tf2_quat.z());
 }
 
 }  // namespace utils
